@@ -1,9 +1,9 @@
 GigFinder
 ***
-- This is a phone application that allows bands to find an artist they'd like to feature 
+- This is a phone application that allows bands to find an artist they'd like to feature
 - or find a replacement for a band member who is unable to perform that night. It also
-- contains a way to contact a potential artist and displays wanted ads for bands looking for 
-- a new member/replacement. Local concerts are shown in your area. Artists are sorted by 
+- contains a way to contact a potential artist and displays wanted ads for bands looking for
+- a new member/replacement. Local concerts are shown in your area. Artists are sorted by
 - instrumentation.
 
 Installation:
@@ -16,4 +16,5 @@ Installation:
 6. Open your terminal in VS
 7. Type "react-native run-android"
 8. Application should load in phone emulator.
+9. (Something about getting the back end started)
 (iOS)
