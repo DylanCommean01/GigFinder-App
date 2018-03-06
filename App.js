@@ -1,8 +1,26 @@
 import React, { Component } from 'react';
-import Home from '.src/components/Home';
+import { Platform, StyleSheet, Text, View } from 'react-native';
+import { StackNavigator } from 'react-navigation';
+import HomeScreen from './src/components/HomeScreen';
+import SignUp from './src/components/SignUp';
+import Login from './src/components/auth/Login';
+import Search from './src/components/Search';
+import SearchResult from './src/components/SearchResult';
+
+const Nav = StackNavigator({
+    Home: { screen: HomeScreen, navigationOptions: { header: null } },
+    Login: { screen: Login },
+    SignUp: { screen: SignUp },
+    Search: { screen: Search },
+    SearchResult: { screen: SearchResult },
+}, {
+        initialRouteName: 'Home'
+    });
 
 export default class App extends Component {
     render() {
-        return <Home />;
+        return (
+            <Nav />
+        );
     }
 }

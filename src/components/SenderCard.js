@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView, Text, StyleSheet } from 'react-native';
 
 
 export default class SenderCard extends Component {
@@ -11,3 +11,4 @@ export default class SenderCard extends Component {
         )
     }
 }
+
