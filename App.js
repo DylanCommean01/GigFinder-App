@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Messanger from './components/Messanger';
+import Home from '.src/components/Home';
 
 export default class App extends Component {
     render() {
-        return  <Messanger />;
+        return <Home />;
     }
 }

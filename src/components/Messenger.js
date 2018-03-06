@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import {
-    StyleSheet,
     Text,
     TextInput,
     Button,
-    ScrollView,
-    View
+    ScrollView
 } from 'react-native';
-import TextMessageList from './components/TextMessageList';
+import TextMessageList from './TextMessageList';
 
-export default class Messanger extends Component {
+export default class Messenger extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -38,7 +36,7 @@ export default class Messanger extends Component {
 
     getTextMessages() {
         this.setState({
-            textMessage: { receiverMessage: [...this.state.textMessage.receivermessage] },
+            // textMessage: { receiverMessage: [...this.state.textMessage.receivermessage] },
             textMessage: { senderMessage: [...this.state.textMessage.senderMessage] },
             showMessages: true
         });
@@ -82,17 +80,15 @@ export default class Messanger extends Component {
 
     render() {
         return (
-            <View>
+            <ScrollView>
                 <Text>Instant Messenger!</Text>
-                <ScrollView>
-                    {this.renderMessages()}
-                </ScrollView>
+                {this.renderMessages()}
                 <TextInput
                     onChangeText={(text) => { this.handleTextChange(text); }}
                     placeholder='Enter a message'
                 />
                 {this.renderButton()}
-            </View>
+            </ScrollView>
         );
     }
 }
