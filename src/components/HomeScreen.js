@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { KeyboardAvoidingView, TouchableOpacity, Image, View, Text, StyleSheet } from 'react-native';
 import LoginForm from './LoginForm';
 
-
 export default class HomeScreen extends Component {
     constructor(props) {
         super(props);
