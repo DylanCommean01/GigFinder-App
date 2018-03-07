@@ -74,34 +74,18 @@ export default class Search extends Component {
         const instrumentIndex = this.state.instrument_name;
 
         if (locationIndex !== '' && instrumentIndex !== '') {
-            console.log('both');
             let selectedLocation = this.state.locations[locationIndex].location_name;
             let selectedInstrument = this.state.instruments[instrumentIndex].instrument_name;
 
             searchResultsService.getArtist(selectedLocation, selectedInstrument)
                 .then((results) => {
-                    console.log('searchResults:' + results);
                     Alert.alert('Location and Instrument Search Results');
                     this.props.navigation.navigate('SearchResult', { results });
                 }).catch((err) => {
                     console.log(err);
-                    alert("No Search Results!!!!");
+                    alert("No search results found.");
                 })
 
-            // searchResultsService.getArtistLocation(selectedLocation)
-            //     .then((results) => {
-            //         console.log(results);
-            //         let selectedInstrument = this.state.instruments[instrumentIndex].instrument_name;
-            //         console.log('SI:' + selectedInstrument);
-            //         searchResultsService.getArtistInstrument(selectedInstrument)
-            //             .then((results) => {
-            //                 console.log(results);
-            //                 this.props.navigation.navigate('SearchResult', { results });
-            //             })
-            //     }).catch((err) => {
-            //         console.log(err);
-            //         alert("No Search Results!!!!");
-            //     })
         } else if (locationIndex !== '') {
 
             let selectedLocation = this.state.locations[locationIndex].location_name;
@@ -112,7 +96,7 @@ export default class Search extends Component {
                     this.props.navigation.navigate('SearchResult', { results });
                 }).catch((err) => {
                     console.log(err);
-                    alert("No Search Results!!!!");
+                    alert("No search results found.");
                 })
         } else if (instrumentIndex !== '') {
 
@@ -124,10 +108,10 @@ export default class Search extends Component {
                     this.props.navigation.navigate('SearchResult', { results });
                 }).catch((err) => {
                     console.log(err);
-                    alert("No Search Results!!!!");
+                    alert("No search results found.");
                 })
         } else if (locationIndex === '' || instrumentIndex === '') {
-            Alert.alert('Please choose an instrument or a location');
+            Alert.alert('Please choose an instrument or a location:');
         } else {
             Alert.alert('Search Error');
         }

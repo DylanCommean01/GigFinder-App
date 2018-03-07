@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ScrollView, Text, StyleSheet } from 'react-native';
 
 
-export default class SenderCard extends Component {
+export default class TextListCard extends Component {
     render() {
         return (
             <ScrollView >
