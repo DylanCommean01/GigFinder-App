@@ -5,46 +5,55 @@ import {
     Button,
     ScrollView
 } from 'react-native';
-import TextMessageList from './TextMessageList';
+import TextMessageSent from './TextMessageSent';
+import TextMessageFetch from './TextMessageFetch';
 
 export default class Messenger extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            textMessage: {
-                senderMessage: [],
-                receiverMessage: []
-            },
+            sentMessages: [],
+            fetchMessages: [{ text: 'Hello!' }, { text: 'How are you?' }],
             value: '',
             showButton: true,
-            showMessages: false
+            showFetchedMessages: false,
+            showSentMessages: false,
+            artist: 'David Bowie' //take out when done
         };
     }
 
     componentDidMount() {
-        let receive = this.state.textMessage.receiverMessage;
-        let send = this.state.textMessage.senderMessage;
+        let fetch = this.state.fetchMessages;
+        let sent = this.state.sentMessages;
 
         if (this.state.value == '') {
             this.setState({ showButton: false });
         }
-        if (send.length > 0 || receive.length > 0) {
-            this.setState({ showMessages: true });
+        if (fetch.length > 0) {
+            this.fetchMessages()
         }
-
+        if (sent.length > 0) {
+            this.getSentMessages()
+        }
     }
 
-    getTextMessages() {
+    fetchMessages() {
         this.setState({
-            // textMessage: { receiverMessage: [...this.state.textMessage.receivermessage] },
-            textMessage: { senderMessage: [...this.state.textMessage.senderMessage] },
-            showMessages: true
+            fetchMessages: [...this.state.fetchMessages],
+            showFetchedMessages: true
+        });
+    }
+
+    getSentMessages() {
+        this.setState({
+            sentMessages: [...this.state.sentMessages],
+            showSentMessages: true
         });
     }
 
     postMessage(message) {
-        this.state.textMessage.senderMessage.push(message);
-        this.getTextMessages();
+        this.state.sentMessages.push(message);
+        this.getSentMessages();
     }
 
     handleTextChange(text) {
@@ -56,7 +65,7 @@ export default class Messenger extends Component {
 
     handlePress(event) {
         this.postMessage({
-            text: this.state.value
+            text: this.state.value,
         });
     }
 
@@ -70,10 +79,18 @@ export default class Messenger extends Component {
         }
     }
 
-    renderMessages() {
-        if (this.state.showMessages) {
+    renderSentMessages() {
+        if (this.state.showSentMessages) {
             return (
-                <TextMessageList senderMessage={this.state.textMessage.senderMessage} />
+                <TextMessageSent sentMessages={this.state.sentMessages} />
+            );
+        }
+    }
+
+    renderFetchedMessages() {
+        if (this.state.showFetchedMessages) {
+            return (
+                <TextMessageFetch fetchMessages={this.state.fetchMessages} />
             );
         }
     }
@@ -81,8 +98,9 @@ export default class Messenger extends Component {
     render() {
         return (
             <ScrollView>
-                <Text>Instant Messenger!</Text>
-                {this.renderMessages()}
+                <Text>{this.state.artist}</Text>
+                {this.renderFetchedMessages()}
+                {this.renderSentMessages()}
                 <TextInput
                     onChangeText={(text) => { this.handleTextChange(text); }}
                     placeholder='Enter a message'

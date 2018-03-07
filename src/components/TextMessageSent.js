@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import TextListCard from './TextListCard';
+import SentTextCard from './SentTextCard';
 
-export default class TextMessageList extends Component {
+export default class TextMessageSent extends Component {
     render() {
         return (
             <View>
-                {this.props.senderMessage.map((text, index) => {
+                {this.props.sentMessages.map((text, index) => {
                     return (
-                        <TextListCard key={index} senderMessage={text} />
+                        <SentTextCard key={index} sentMessages={text} />
                     );
                 })}
             </View>
