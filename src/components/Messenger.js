@@ -3,7 +3,9 @@ import {
     Text,
     TextInput,
     Button,
-    ScrollView
+    ScrollView,
+    View,
+    StyleSheet
 } from 'react-native';
 import TextMessageSent from './TextMessageSent';
 import TextMessageFetch from './TextMessageFetch';
@@ -13,12 +15,15 @@ export default class Messenger extends Component {
         super(props);
         this.state = {
             sentMessages: [],
-            fetchMessages: [{ text: 'Hello!' }, { text: 'How are you?' }],
+            fetchMessages: [
+                { text: 'This is placeholder text' },
+                { text: 'Hopefully we get the backend running to display recieved messages!' },
+            ],
             value: '',
             showButton: true,
             showFetchedMessages: false,
             showSentMessages: false,
-            artist: 'David Bowie' //take out when done
+            artist: 'David Bowie'
         };
     }
 
@@ -97,16 +102,33 @@ export default class Messenger extends Component {
 
     render() {
         return (
-            <ScrollView>
-                <Text>{this.state.artist}</Text>
-                {this.renderFetchedMessages()}
-                {this.renderSentMessages()}
-                <TextInput
-                    onChangeText={(text) => { this.handleTextChange(text); }}
-                    placeholder='Enter a message'
-                />
-                {this.renderButton()}
-            </ScrollView>
+            <View style={styles.container}>
+                <ScrollView>
+                    <Text>{this.props.artist}</Text>
+                    {this.renderFetchedMessages()}
+                    {this.renderSentMessages()}
+                </ScrollView>
+                <View style={styles.bBar}>
+                    <TextInput
+                        onChangeText={(text) => { this.handleTextChange(text); }}
+                        placeholder='Enter a message'
+                    />
+                    {this.renderButton()}
+                </View>
+            </View >
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
+    bBar: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: 'white'
+    }
+});

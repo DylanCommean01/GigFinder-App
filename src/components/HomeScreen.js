@@ -8,12 +8,10 @@ export default class HomeScreen extends Component {
     }
 
     skip() {
-        console.log('skip here');
         return this.props.navigation.navigate('Search');
     }
 
     signup() {
-        console.log('sign up here');
         return this.props.navigation.navigate('SignUp');
     }
 

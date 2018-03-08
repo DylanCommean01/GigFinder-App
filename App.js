@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import {
+    Platform,
+    StyleSheet,
+    Text,
+    View,
+    StatusBar
+} from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import HomeScreen from './src/components/HomeScreen';
 import SignUp from './src/components/SignUp';
@@ -24,6 +30,7 @@ export default class App extends Component {
     render() {
         return (
             <Routes />
+
         );
     }
 }

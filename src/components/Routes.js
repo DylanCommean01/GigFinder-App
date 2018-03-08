@@ -10,7 +10,9 @@ import Login from './auth/Login';
 import Search from './Search';
 import SearchResult from './SearchResult';
 import Camera from './Camera';
-import iCamera from './iCamera';
+// import iCamera from './iCamera';
+import MessengerInbox from './MessengerInbox';
+import Messenger from './Messenger';
 // import Test from './Test';
 
 const generateDrawerHamburger = (currentNav) => {
@@ -19,7 +21,7 @@ const generateDrawerHamburger = (currentNav) => {
     return (
         <Icon
             onPress={onPress}
-            name="menu"
+            name="navicon"
             size={26}
             type='font-awesome'
             color='black'
@@ -36,9 +38,18 @@ const getStackNavOption = (current) => ({
         paddingRight: 10
 
     },
-    headerTitle: <Text> GigFinder</Text>,
+    headerTitle: null,
     headerRight: generateDrawerHamburger(current),
 });
+const getStackNavOptionMessenger = (current) => ({
+    headerStyle: {
+        backgroundColor: 'lightgrey',
+        display: 'flex',
+        paddingRight: 10
+    },
+    headerTitle: 'Your Inbox',
+    headerRight: generateDrawerHamburger(current),
+})
 
 const HomeStack = StackNavigator({
     HomeScreen: {
@@ -56,17 +67,7 @@ const SignUpStack = StackNavigator({
     SignUp: {
         screen: SignUp,
         navigationOptions: getStackNavOption
-    },
-    SignUp: {
-        screen: SignUp,
-        navigationOptions: getStackNavOption
-    },
-    SignUp: {
-        screen: SignUp,
-        navigationOptions: getStackNavOption
-    },
-
-
+    }
 });
 const SearchStack = StackNavigator({
     Search: {
@@ -88,6 +89,17 @@ const CameraStack = StackNavigator({
         navigationOptions: getStackNavOption
     }
 });
+const MessengerInboxStack = StackNavigator({
+    MessengerInbox: {
+        screen: MessengerInbox,
+        navigationOptions: getStackNavOptionMessenger
+    },
+    Messenger: {
+        screen: Messenger,
+        navigationOptions: getStackNavOption
+    }
+});
+
 // const iCameraStack = StackNavigator({
 //     iCamera: {
 //         screen: iCamera,
@@ -123,6 +135,9 @@ export default DrawerNavigator({
     // Test: {
     //     screen: TestStack
     // }
+    MessengerInbox: {
+        screen: MessengerInboxStack
+    },
 }, {
         contentComponent: SideMenu,
         drawerWidth: 300,

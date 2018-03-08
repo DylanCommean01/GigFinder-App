@@ -45,9 +45,11 @@ class SideMenu extends Component {
                             {/* <Text style={styles.navItemStyle} onPress={this.navigateToScreen('iCamera')}>
                                 iOS Camera
                             </Text> */}
-                            <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Test')}>
+                            {/* <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Test')}>
                                 Testing Compo
-                            </Text>
+                            </Text> */}
+                            <Text style={styles.navItemStyle} onPress={this.navigateToScreen('MessengerInbox')}>
+                                Inbox</Text>
                         </View>
                     </View>
                 </ScrollView>
