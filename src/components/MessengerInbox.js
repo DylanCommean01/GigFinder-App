@@ -44,7 +44,9 @@ export default class MessengerInbox extends Component {
                 <ScrollView>
                     {this.state.artist.map((artist, index) => {
                         return (
-                            <TouchableOpacity key={index} onPress={(event) => { this.handlePress(event) }}>
+                            <TouchableOpacity
+                                key={index}
+                                onPress={(event) => { this.handlePress(event) }}>
                                 <TextCard
                                     id={index}
                                     artist={artist.name}

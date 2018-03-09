@@ -72,6 +72,9 @@ export default class Messenger extends Component {
         this.postMessage({
             text: this.state.value,
         });
+        this.setState({
+            value: ''
+        });
     }
 
     renderButton() {
@@ -79,7 +82,8 @@ export default class Messenger extends Component {
             return (
                 <Button
                     title='Send Message'
-                    onPress={(event) => { this.handlePress(event); }} />
+                    onPress={(event) => { this.handlePress(event); }}
+                />
             );
         }
     }
@@ -103,7 +107,7 @@ export default class Messenger extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView>
+                <ScrollView style={styles.textcontainer}>
                     <Text>{this.props.artist}</Text>
                     {this.renderFetchedMessages()}
                     {this.renderSentMessages()}
@@ -111,7 +115,11 @@ export default class Messenger extends Component {
                 <View style={styles.bBar}>
                     <TextInput
                         onChangeText={(text) => { this.handleTextChange(text); }}
+                        value={this.state.value}
                         placeholder='Enter a message'
+                        autoCorrect={true}
+                        multiline={true}
+                        returnKeyType='send'
                     />
                     {this.renderButton()}
                 </View>
@@ -123,6 +131,8 @@ export default class Messenger extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1
+    },
+    textcontainer: {
     },
     bBar: {
         position: 'absolute',

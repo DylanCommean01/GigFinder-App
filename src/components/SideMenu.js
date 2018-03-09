@@ -21,7 +21,7 @@ class SideMenu extends Component {
                         </Text> */}
                         <View style={styles.navSectionStyle}>
                             <Text style={styles.navItemStyle} onPress={this.navigateToScreen('HomeScreen')}>
-                                HomeScreen
+                                Home
                             </Text>
                         </View>
                     </View>

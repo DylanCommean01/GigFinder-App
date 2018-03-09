@@ -118,7 +118,7 @@ export default class Search extends Component {
     }
 
     handleReset() {
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate('HomeScreen');
     }
 
     render() {
@@ -166,13 +166,6 @@ export default class Search extends Component {
                 >
                     <Text style={styles.buttonText}>SEARCH</Text>
                 </TouchableOpacity >
-
-                <TouchableOpacity style={styles.buttonContainer}
-                    onPress={(e) => this.handleReset(e)}
-                >
-                    <Text style={styles.buttonText}>RESET</Text>
-                </TouchableOpacity >
-
             </View>
         );
     }
