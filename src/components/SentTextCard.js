@@ -1,20 +1,31 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 
 export default class SentTextCard extends Component {
     render() {
         return (
-            <ScrollView >
-                <Text style={styles.left}>{this.props.sentMessages.text}</Text>
-            </ScrollView >
+            <View style={styles.container}>
+                <Text style={styles.text} >{this.props.sentMessages.text}</Text>
+            </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    left: {
-        justifyContent: 'center',
+    text: {
+        color: 'white',
     },
+    container: {
+        borderRadius: 15,
+        backgroundColor: 'grey',
+        marginLeft: 150,
+        marginRight: 3,
+        minHeight: 40,
+        justifyContent: 'center',
+        padding: 3,
+        marginTop: 3,
+        marginBottom: 3
+    }
 });
 

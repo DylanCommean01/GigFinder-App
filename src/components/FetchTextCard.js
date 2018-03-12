@@ -1,20 +1,30 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 
 export default class FetchTextCard extends Component {
     render() {
         return (
-            <ScrollView >
-                <Text style={styles.right}> {this.props.fetchMessages.text}</Text>
-            </ScrollView >
+            <View style={styles.container}>
+                <Text style={styles.text}> {this.props.fetchMessages.text}</Text>
+            </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    right: {
-        alignItems: 'flex-end',
+    text: {
+        color: 'white',
+    },
+    container: {
+        borderRadius: 15,
+        backgroundColor: 'blue',
+        marginRight: 150,
+        marginLeft: 3,
+        minHeight: 20,
+        padding: 3,
+        marginTop: 3,
+        marginBottom: 3,
         justifyContent: 'center',
     }
 });

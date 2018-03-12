@@ -41,7 +41,7 @@ export default class MessengerInbox extends Component {
     renderTextCards() {
         if (this.state.showMessages) {
             return (
-                <ScrollView>
+                <View>
                     {this.state.artist.map((artist, index) => {
                         return (
                             <TouchableOpacity
@@ -54,16 +54,16 @@ export default class MessengerInbox extends Component {
                             </TouchableOpacity>
                         );
                     })}
-                </ScrollView>
+                </View>
             );
         }
     }
 
     render() {
         return (
-            <View>
+            <ScrollView style={styles.container}>
                 {this.renderTextCards()}
-            </View>
+            </ScrollView>
         );
     }
 }

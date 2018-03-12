@@ -22,4 +22,7 @@ const styles = StyleSheet.create({
     titleText: {
         fontWeight: 'bold',
     },
+    subtext: {
+
+    },
 });

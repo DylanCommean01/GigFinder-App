@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import TextMessageSent from './TextMessageSent';
 import TextMessageFetch from './TextMessageFetch';
+import AutoScroll from 'react-native-auto-scroll';
+import dismissKeyboard from 'react-native-dismiss-keyboard';
 
 export default class Messenger extends Component {
     constructor(props) {
@@ -23,7 +25,8 @@ export default class Messenger extends Component {
             showButton: true,
             showFetchedMessages: false,
             showSentMessages: false,
-            artist: 'David Bowie'
+            artist: 'David Bowie',
+            timeStamp: 'March 12, 2018, 10:39 AM'
         };
     }
 
@@ -57,8 +60,11 @@ export default class Messenger extends Component {
     }
 
     postMessage(message) {
-        this.state.sentMessages.push(message);
+        if (this.state.value !== '') {
+            this.state.sentMessages.push(message);
+        }
         this.getSentMessages();
+
     }
 
     handleTextChange(text) {
@@ -73,8 +79,11 @@ export default class Messenger extends Component {
             text: this.state.value,
         });
         this.setState({
-            value: ''
+            value: '',
+            showButton: false
         });
+        dismissKeyboard();
+        console.log(this.state)
     }
 
     renderButton() {
@@ -107,12 +116,22 @@ export default class Messenger extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView style={styles.textcontainer}>
-                    <Text>{this.props.artist}</Text>
-                    {this.renderFetchedMessages()}
-                    {this.renderSentMessages()}
-                </ScrollView>
-                <View style={styles.bBar}>
+                <AutoScroll style={styles.textContainer}>
+                    <View style={styles.user}>
+                        <Text>{this.state.artist}</Text>
+                    </View>
+                    <View style={styles.time}>
+                        <Text>{this.state.timeStamp}</Text>
+                    </View>
+                    <View>
+                        {this.renderFetchedMessages()}
+                    </View>
+                    <View>
+                        {this.renderSentMessages()}
+                    </View>
+                </AutoScroll>
+
+                <View style={styles.inputToolbar}>
                     <TextInput
                         onChangeText={(text) => { this.handleTextChange(text); }}
                         value={this.state.value}
@@ -121,9 +140,11 @@ export default class Messenger extends Component {
                         multiline={true}
                         returnKeyType='send'
                     />
-                    {this.renderButton()}
+                    <View>
+                        {this.renderButton()}
+                    </View>
                 </View>
-            </View >
+            </View>
         );
     }
 }
@@ -132,13 +153,22 @@ const styles = StyleSheet.create({
     container: {
         flex: 1
     },
-    textcontainer: {
+    user: {
+        alignItems: 'center',
     },
-    bBar: {
+    time: {
+        alignItems: 'center',
+    },
+    textContainer: {
+        marginBottom: 55
+    }
+    ,
+    inputToolbar: {
         position: 'absolute',
-        bottom: 0,
         left: 0,
         right: 0,
-        backgroundColor: 'white'
+        bottom: 0,
+        backgroundColor: 'white',
+        flex: 1,
     }
 });
