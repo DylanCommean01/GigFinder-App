@@ -6,7 +6,7 @@ export default class FetchTextCard extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.text}> {this.props.fetchMessages.text}</Text>
+                <Text style={styles.text}> {this.props.fetchMessages.message}</Text>
             </View>
         )
     }

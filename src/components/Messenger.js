@@ -11,6 +11,7 @@ import TextMessageSent from './TextMessageSent';
 import TextMessageFetch from './TextMessageFetch';
 import AutoScroll from 'react-native-auto-scroll';
 import dismissKeyboard from 'react-native-dismiss-keyboard';
+import * as messageService from '../../services/message';
 
 export default class Messenger extends Component {
     constructor(props) {
@@ -18,8 +19,8 @@ export default class Messenger extends Component {
         this.state = {
             sentMessages: [],
             fetchMessages: [
-                { text: 'This is placeholder text' },
-                { text: 'Hopefully we get the backend running to display recieved messages!' },
+                { message: 'This is placeholder text' },
+                { message: 'Hopefully we get the backend running to display recieved messages!' },
             ],
             value: '',
             showButton: true,
@@ -37,12 +38,14 @@ export default class Messenger extends Component {
         if (this.state.value == '') {
             this.setState({ showButton: false });
         }
-        if (fetch.length > 0) {
-            this.fetchMessages()
-        }
-        if (sent.length > 0) {
-            this.getSentMessages()
-        }
+
+        this.fetchMessages();
+        // if (fetch.length > 0) {
+        //     this.fetchMessages()
+        // }
+        // if (sent.length > 0) {
+        //     this.getSentMessages()
+        // }
     }
 
     fetchMessages() {
@@ -57,14 +60,30 @@ export default class Messenger extends Component {
             sentMessages: [...this.state.sentMessages],
             showSentMessages: true
         });
+
+        // fetch('/api/message')
+        //     .then((messages) => {
+        //         this.setState({ fetchMessages: message });
+        //     }).catch((err) => {
+        //         console.log(err);
+        //     });
     }
 
     postMessage(message) {
         if (this.state.value !== '') {
             this.state.sentMessages.push(message);
         }
-        this.getSentMessages();
 
+        console.log("message posting to database!");
+        console.log(JSON.stringify(message));
+        messageService.insert(message)
+            .then(() => {
+                alert("Message sent");
+                this.getSentMessages();
+            }).catch((err) => {
+                console.log(err);
+                alert("Message Lost");
+            })
     }
 
     handleTextChange(text) {
@@ -76,14 +95,15 @@ export default class Messenger extends Component {
 
     handlePress(event) {
         this.postMessage({
-            text: this.state.value,
+            "userid": 1,
+            "receiverid": 2,
+            "message": this.state.value,
         });
         this.setState({
             value: '',
             showButton: false
         });
         dismissKeyboard();
-        console.log(this.state)
     }
 
     renderButton() {

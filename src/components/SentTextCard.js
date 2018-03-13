@@ -6,7 +6,7 @@ export default class SentTextCard extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.text} >{this.props.sentMessages.text}</Text>
+                <Text style={styles.text} >{this.props.sentMessages.message}</Text>
             </View>
         )
     }
@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
         marginRight: 3,
         minHeight: 40,
         justifyContent: 'center',
+        alignItems: 'flex-end',
         padding: 3,
         marginTop: 3,
         marginBottom: 3
