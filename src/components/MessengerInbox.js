@@ -6,32 +6,32 @@ import {
     Text,
     StyleSheet
 } from 'react-native';
+import * as messageService from '../../services/message';
 import TextCard from './TextCard';
 
 export default class MessengerInbox extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            artist: [
-                { name: 'David Bowie', textPreview: 'Little China Girlllll.' },
-                { name: 'Josh', textPreview: 'Why am I in this project?' },
-                { name: 'Walter', textPreview: 'Hello!' }
-            ],
-            showMessages: false,
+            fetchMessages: [],
+            showMessages: false
         }
     }
 
     componentDidMount() {
-        if (this.state.artist.length > 0) {
-            this.fetchMessages()
-        }
+        this.fetchMessages()
     }
 
     fetchMessages() {
-        this.setState({
-            artist: [...this.state.artist],
-            showMessages: true
-        });
+        messageService.getRecent()
+            .then((inbox) => {
+                this.setState({
+                    fetchMessages: inbox,
+                    showMessages: true,
+                });
+            }).catch((err) => {
+                console.log(err);
+            });
     }
 
     handlePress(event) {
@@ -42,15 +42,15 @@ export default class MessengerInbox extends Component {
         if (this.state.showMessages) {
             return (
                 <View>
-                    {this.state.artist.map((artist, index) => {
+                    {this.state.fetchMessages.map((inbox, index) => {
                         return (
                             <TouchableOpacity
                                 key={index}
                                 onPress={(event) => { this.handlePress(event) }}>
                                 <TextCard
                                     id={index}
-                                    artist={artist.name}
-                                    textPreview={artist.textPreview} />
+                                    artist={inbox.receiverid}
+                                    textPreview={inbox.message} />
                             </TouchableOpacity>
                         );
                     })}
@@ -69,5 +69,7 @@ export default class MessengerInbox extends Component {
 }
 
 const styles = StyleSheet.create({
-
+    container: {
+        flex: 1
+    }
 });

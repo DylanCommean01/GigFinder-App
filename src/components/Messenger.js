@@ -5,84 +5,60 @@ import {
     Button,
     ScrollView,
     View,
-    StyleSheet
+    StyleSheet,
+    KeyboardAvoidingView
 } from 'react-native';
-import TextMessageSent from './TextMessageSent';
-import TextMessageFetch from './TextMessageFetch';
 import AutoScroll from 'react-native-auto-scroll';
 import dismissKeyboard from 'react-native-dismiss-keyboard';
 import * as messageService from '../../services/message';
+import SentTextCard from './SentTextCard';
+import FetchTextCard from './FetchTextCard';
+
 
 export default class Messenger extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sentMessages: [],
-            fetchMessages: [
-                { message: 'This is placeholder text' },
-                { message: 'Hopefully we get the backend running to display recieved messages!' },
-            ],
+            fetchMessages: [],
             value: '',
             showButton: true,
             showFetchedMessages: false,
-            showSentMessages: false,
-            artist: 'David Bowie',
-            timeStamp: 'March 12, 2018, 10:39 AM'
+            timeStamp: 'Man, like, I don\'t know sometime?',
+            userid: 1,
+            whereFrom: 1,
         };
     }
 
     componentDidMount() {
-        let fetch = this.state.fetchMessages;
-        let sent = this.state.sentMessages;
-
         if (this.state.value == '') {
             this.setState({ showButton: false });
         }
 
         this.fetchMessages();
-        // if (fetch.length > 0) {
-        //     this.fetchMessages()
-        // }
-        // if (sent.length > 0) {
-        //     this.getSentMessages()
-        // }
     }
 
     fetchMessages() {
-        this.setState({
-            fetchMessages: [...this.state.fetchMessages],
-            showFetchedMessages: true
-        });
-    }
-
-    getSentMessages() {
-        this.setState({
-            sentMessages: [...this.state.sentMessages],
-            showSentMessages: true
-        });
-
-        // fetch('/api/message')
-        //     .then((messages) => {
-        //         this.setState({ fetchMessages: message });
-        //     }).catch((err) => {
-        //         console.log(err);
-        //     });
+        messageService.get()
+            .then((message) => {
+                this.setState({
+                    fetchMessages: message,
+                    showFetchedMessages: true,
+                });
+                console.log(this.state.fetchMessages);
+            }).catch((err) => {
+                console.log(err);
+            });
     }
 
     postMessage(message) {
         if (this.state.value !== '') {
-            this.state.sentMessages.push(message);
+            this.state.fetchMessages.push(message);
         }
 
-        console.log("message posting to database!");
-        console.log(JSON.stringify(message));
         messageService.insert(message)
             .then(() => {
-                alert("Message sent");
-                this.getSentMessages();
             }).catch((err) => {
                 console.log(err);
-                alert("Message Lost");
             })
     }
 
@@ -95,13 +71,14 @@ export default class Messenger extends Component {
 
     handlePress(event) {
         this.postMessage({
-            "userid": 1,
+            "userid": this.state.userid,
             "receiverid": 2,
             "message": this.state.value,
+            "wherefrom": this.state.userid
         });
         this.setState({
             value: '',
-            showButton: false
+            showButton: false,
         });
         dismissKeyboard();
     }
@@ -111,16 +88,9 @@ export default class Messenger extends Component {
             return (
                 <Button
                     title='Send Message'
+                    style={styles.button}
                     onPress={(event) => { this.handlePress(event); }}
                 />
-            );
-        }
-    }
-
-    renderSentMessages() {
-        if (this.state.showSentMessages) {
-            return (
-                <TextMessageSent sentMessages={this.state.sentMessages} />
             );
         }
     }
@@ -128,26 +98,26 @@ export default class Messenger extends Component {
     renderFetchedMessages() {
         if (this.state.showFetchedMessages) {
             return (
-                <TextMessageFetch fetchMessages={this.state.fetchMessages} />
+                <View>
+                    {this.state.fetchMessages.map((message, index) => {
+                        return <FetchTextCard key={index} message={message}
+                            whereFrom={this.state.whereFrom} />;
+                    })}
+                </View>
             );
         }
     }
 
     render() {
         return (
-            <View style={styles.container}>
-                <AutoScroll style={styles.textContainer}>
-                    <View style={styles.user}>
-                        <Text>{this.state.artist}</Text>
-                    </View>
+            <KeyboardAvoidingView
+                style={styles.container}>
+                <AutoScroll>
                     <View style={styles.time}>
                         <Text>{this.state.timeStamp}</Text>
                     </View>
-                    <View>
+                    <View style={styles.textContainer}>
                         {this.renderFetchedMessages()}
-                    </View>
-                    <View>
-                        {this.renderSentMessages()}
                     </View>
                 </AutoScroll>
 
@@ -164,7 +134,7 @@ export default class Messenger extends Component {
                         {this.renderButton()}
                     </View>
                 </View>
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 }
@@ -173,22 +143,20 @@ const styles = StyleSheet.create({
     container: {
         flex: 1
     },
-    user: {
-        alignItems: 'center',
-    },
     time: {
         alignItems: 'center',
     },
+    button: {
+
+    },
     textContainer: {
         marginBottom: 55
-    }
-    ,
+    },
     inputToolbar: {
         position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
         backgroundColor: 'white',
-        flex: 1,
     }
 });

@@ -20,7 +20,7 @@ export default class TextCard extends Component {
 
 const styles = StyleSheet.create({
     titleText: {
-        fontWeight: 'bold',
+
     },
     subtext: {
 
