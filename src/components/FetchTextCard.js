@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 
+
 export default class FetchTextCard extends Component {
     render() {
-        if (this.props.message.wherefrom !== this.props.whereFrom) {
+        if (this.props.userid !== this.props.message.userid) {
             return (
                 <View style={styles.containerLeft}>
                     <Text style={styles.text}>{this.props.message.message}</Text>
@@ -25,6 +26,9 @@ const styles = StyleSheet.create({
         color: 'white',
         paddingRight: 5,
         paddingLeft: 5
+    },
+    timeStamp: {
+        color: 'black'
     },
     containerLeft: {
         borderRadius: 15,
