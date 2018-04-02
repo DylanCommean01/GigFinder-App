@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { ScrollView, View, StyleSheet, TouchableOpacity, Alert, Text } from 'react-native';
+import { ScrollView, View, StyleSheet, TouchableOpacity, Alert, Text, ImageBackground } from 'react-native';
 import { Card } from 'react-native-elements';
 import { Picker } from 'react-native-picker-dropdown';
 
-import * as searchService from '../../services/search';
-import * as searchResultsService from '../../services/searchResults';
+import * as searchService from '../services/search';
+import * as searchResultsService from '../services/searchResults';
 
 import SearchResult from './SearchResult';
 
@@ -74,29 +74,35 @@ export default class Search extends Component {
         const instrumentIndex = this.state.instrument_name;
 
         if (locationIndex !== '' && instrumentIndex !== '') {
+            console.log('both');
             let selectedLocation = this.state.locations[locationIndex].location_name;
             let selectedInstrument = this.state.instruments[instrumentIndex].instrument_name;
 
             searchResultsService.getArtist(selectedLocation, selectedInstrument)
                 .then((results) => {
-                    Alert.alert('Location and Instrument Search Results');
+                    console.log('searchResults:' + results);
+                    // Alert.alert('Location and Instrument Search Results');
                     this.props.navigation.navigate('SearchResult', { results });
                 }).catch((err) => {
                     console.log(err);
-                    alert("No search results found.");
+                    alert("No Search Results!!!!");
                 })
-
         } else if (locationIndex !== '') {
 
             let selectedLocation = this.state.locations[locationIndex].location_name;
 
             searchResultsService.getArtistLocation(selectedLocation)
                 .then((results) => {
-                    Alert.alert('Location Search Results');
+                    // Alert.alert('Location Search Results');
+                    results.sort(function (a, b) {
+                        var textA = a.name.toUpperCase();
+                        var textB = b.name.toUpperCase();
+                        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+                    });
                     this.props.navigation.navigate('SearchResult', { results });
                 }).catch((err) => {
                     console.log(err);
-                    alert("No search results found.");
+                    alert("No Search Results!!!!");
                 })
         } else if (instrumentIndex !== '') {
 
@@ -104,14 +110,19 @@ export default class Search extends Component {
 
             searchResultsService.getArtistInstrument(selectedInstrument)
                 .then((results) => {
-                    Alert.alert('Instrument Search');
+                    // Alert.alert('Instrument Search');
+                    results.sort(function (a, b) {
+                        var textA = a.name.toUpperCase();
+                        var textB = b.name.toUpperCase();
+                        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+                    });
                     this.props.navigation.navigate('SearchResult', { results });
                 }).catch((err) => {
                     console.log(err);
-                    alert("No search results found.");
+                    alert("No Search Results!!!!");
                 })
         } else if (locationIndex === '' || instrumentIndex === '') {
-            Alert.alert('Please choose an instrument or a location:');
+            Alert.alert('Please choose an instrument or a location');
         } else {
             Alert.alert('Search Error');
         }
@@ -123,10 +134,11 @@ export default class Search extends Component {
 
     render() {
         return (
+            <ImageBackground source={{ uri: 'https://static.tumblr.com/e31f3012fa7c249095a8dddbfc58f0c4/rgmmpty/K3Tmpmf2h/tumblr_static_brick_wall_night_texture_by_kaf94-d373s49.jpg' }} style={styles.container}>
             <View style={styles.container}>
-
-                <Text>Choose Location</Text>
-
+                <View>
+                    <Text style={{ color: 'lightgrey', fontSize: 17 }}>Choose Location</Text>
+                </View>
                 <Picker
                     selectedValue={this.state.location_name}
                     onValueChange={this.onValueChange}
@@ -142,9 +154,9 @@ export default class Search extends Component {
                     })}
 
                 </Picker>
-
-                <Text>Choose Instrument</Text>
-
+                <View>
+                    <Text style={{ color: 'lightgrey', fontSize: 17 }}>Choose Instrument</Text>
+                </View>
                 <Picker
                     selectedValue={this.state.instrument_name}
                     onValueChange={this.onValChange}
@@ -160,13 +172,22 @@ export default class Search extends Component {
                     })}
 
                 </Picker>
-
+                    <View style={{ flexDirection: 'row'}}>
                 <TouchableOpacity style={styles.buttonContainer}
                     onPress={(e) => this.handleSubmit(e)}
                 >
-                    <Text style={styles.buttonText}>SEARCH</Text>
+                    <Text style={styles.buttonText}>Search</Text>
                 </TouchableOpacity >
+
+                <TouchableOpacity style={styles.buttonContainer}
+                    onPress={(e) => this.handleReset(e)}
+                >
+                    <Text style={styles.buttonText}>Reset</Text>
+                </TouchableOpacity >
+                </View>
+
             </View>
+            </ImageBackground>
         );
     }
 }
@@ -174,31 +195,32 @@ export default class Search extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'lightblue',
         alignItems: 'center',
         justifyContent: 'center',
     },
     picker: {
-        alignSelf: 'stretch',
-        backgroundColor: 'cadetblue',
-        paddingHorizontal: 20,
-        paddingVertical: 20,
+        alignSelf: 'center',
+        backgroundColor: '#f2f2f2',
         margin: 20,
         borderRadius: 10,
-
-    },
-    pickerText: {
-        color: 'white',
+        width: 250,
+        height: 40
     },
     buttonContainer: {
-        backgroundColor: '#2980b6',
-        paddingVertical: 15,
-        paddingHorizontal: 100,
-        marginBottom: 15,
+        backgroundColor: '#15a3a3',
+        borderColor: '#21ffff',
+        borderWidth: 1,
+        borderRadius: 40,
+        height: 30,
+        width: 120,
+        margin: 5,
+        alignSelf: 'center',
+        borderBottomWidth: 0
     },
     buttonText: {
-        color: '#fff',
-        textAlign: 'center',
-        fontWeight: '700'
-    }
+        color: '#f2f2f2',
+        fontSize: 17,
+        alignSelf: 'center',
+        paddingTop: 3
+    },
 })

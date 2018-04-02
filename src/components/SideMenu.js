@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { NavigationActions } from 'react-navigation';
 import { ScrollView, Text, View, StyleSheet } from 'react-native';
 
-class SideMenu extends Component {
+export default class SideMenu extends Component {
+
     navigateToScreen = (route) => () => {
         const navigateAction = NavigationActions.navigate({
             routeName: route
@@ -21,7 +22,7 @@ class SideMenu extends Component {
                         </Text> */}
                         <View style={styles.navSectionStyle}>
                             <Text style={styles.navItemStyle} onPress={this.navigateToScreen('HomeScreen')}>
-                                Home
+                                HomeScreen
                             </Text>
                         </View>
                     </View>
@@ -33,23 +34,36 @@ class SideMenu extends Component {
                             <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Login')}>
                                 Login
                             </Text>
-                            <Text style={styles.navItemStyle} onPress={this.navigateToScreen('SignUp')}>
+                            {/* <Text style={styles.navItemStyle} onPress={this.navigateToScreen('SignUp')}>
                                 Sign Up
                             </Text>
                             <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Search')}>
                                 Search
-                            </Text>
+                            </Text> */}
                             <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Camera')}>
-                                Android Camera
+                                Camera
                             </Text>
-                            {/* <Text style={styles.navItemStyle} onPress={this.navigateToScreen('iCamera')}>
-                                iOS Camera
-                            </Text> */}
-                            {/* <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Test')}>
-                                Testing Compo
-                            </Text> */}
+                            <Text style={styles.navItemStyle} onPress={this.navigateToScreen('UserProfile')}>
+                                UserProfile
+                            </Text>
                             <Text style={styles.navItemStyle} onPress={this.navigateToScreen('MessengerInbox')}>
-                                Inbox</Text>
+                                Inbox
+                            </Text>
+                            <Text style={styles.navItemStyle} onPress={this.navigateToScreen('About')}>
+                                About
+                            </Text>
+                            <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Gigs')}>
+                                Gigs
+                            </Text>
+                            <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Events')}>
+                                Events
+                            </Text>
+                            <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Contact Us')}>
+                                Contact Us
+                            </Text>
+                            <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Version')}>
+                                Version
+                            </Text>
                         </View>
                     </View>
                 </ScrollView>
@@ -71,10 +85,12 @@ const styles = StyleSheet.create({
         flex: 1
     },
     navItemStyle: {
-        padding: 10
+        padding: 10,
+        color: '#15a3a3',
+        fontSize: 17
     },
     navSectionStyle: {
-        backgroundColor: 'lightgrey'
+        backgroundColor: '#888888'
     },
     sectionHeadingStyle: {
         paddingVertical: 10,
@@ -82,8 +98,7 @@ const styles = StyleSheet.create({
     },
     footerContainer: {
         padding: 20,
-        backgroundColor: 'lightgrey'
+        backgroundColor: '#333333'
     }
 })
 
-export default SideMenu;
